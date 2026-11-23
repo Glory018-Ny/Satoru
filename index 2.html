@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f5d9ee">
+<title>API Academy — Révise avec Gojo</title>
+<style>
+:root{--pink:#f3a9d5;--pink2:#ffe5f3;--blue:#9dd8f5;--blue2:#e2f5ff;--navy:#172747;--ink:#24304a;--muted:#66718a;--white:#fff;--purple:#a78bfa;--green:#23865b;--red:#c14b69;--shadow:0 14px 40px #33415c18}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#fff4fa,#eef9ff 55%,#f7f3ff);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55}
+button{font:inherit;cursor:pointer;border:0} .shell{max-width:1120px;margin:auto;padding:22px}
+.hero{position:relative;overflow:hidden;border-radius:28px;padding:32px;background:linear-gradient(115deg,#f5c2df,#b8e4fa 72%,#d7c9ff);box-shadow:var(--shadow);min-height:220px}
+.hero:after{content:"";position:absolute;width:230px;height:230px;border:28px solid #ffffff55;border-radius:50%;right:7%;top:-70px}
+.hero-inner{position:relative;z-index:1;max-width:720px}.eyebrow{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:#4c4268}
+h1{font-size:clamp(2rem,5vw,3.3rem);line-height:1.05;margin:10px 0;color:#172747;letter-spacing:-.04em}.hero p{max-width:620px;margin:10px 0 18px;color:#35415d}
+.hero-tag{display:inline-flex;background:#ffffffa8;padding:7px 12px;border-radius:99px;font-size:.8rem;font-weight:750}
+.hero-art{position:absolute;right:6%;bottom:-15px;width:180px;height:180px;border-radius:48% 48% 35% 35%;background:linear-gradient(145deg,#26395d,#101a34);box-shadow:inset 0 0 0 8px #ffffff38;transform:rotate(5deg)}
+.hero-art:before{content:"";position:absolute;top:42px;left:24px;width:132px;height:45px;background:#f5f4ff;border-radius:30px 30px 16px 16px;box-shadow:0 9px 0 #8dc8eb}
+.hero-art:after{content:"✦";position:absolute;right:8px;top:4px;color:#fff;font-size:35px;text-shadow:0 0 18px #8be2ff}
+@media(max-width:650px){.shell{padding:13px}.hero{padding:24px 20px}.hero-art{opacity:.23;right:-25px}.hero-inner{max-width:100%}}
+.topline{display:flex;gap:12px;align-items:center;justify-content:space-between;margin:20px 2px 12px;flex-wrap:wrap}
+.progress-wrap{flex:1;min-width:180px}.progress-label{display:flex;justify-content:space-between;font-size:.82rem;font-weight:700;color:var(--muted);margin-bottom:7px}.progress{height:10px;background:#e6eaf2;border-radius:99px;overflow:hidden}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),#7dc8ef);border-radius:99px;transition:width .3s}
+.points{background:#fff;border:1px solid #f1d5e8;border-radius:16px;padding:9px 14px;font-weight:800;color:#7c3e75;white-space:nowrap}
+.tabs{display:flex;gap:8px;overflow:auto;padding:4px 0 12px;scrollbar-width:thin}.tab{padding:10px 15px;border-radius:99px;background:#ffffffb8;color:#526078;font-weight:750;white-space:nowrap;border:1px solid #e8eaf1}.tab.active{background:var(--navy);color:white;border-color:var(--navy)}
+.layout{display:grid;grid-template-columns:250px 1fr;gap:16px;align-items:start}@media(max-width:800px){
+ .layout{grid-template-columns:1fr}
+ .sidebar{position:static;z-index:auto;overflow:hidden}
+ #lessonNav{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x proximity}
+ .lesson-link{width:auto;min-width:max-content;flex:0 0 auto;margin:0;padding:8px 11px;border:1px solid #e8eaf1;background:#fff}
+ .lesson-link.active{background:linear-gradient(100deg,#ffe7f4,#e5f5ff);border-color:#edc7e2}
+ .lesson-link .num{width:26px;height:26px}
+ .side-title{margin-bottom:8px}
+ .lesson{padding:20px}
+}
+.panel,.lesson,.quizbox,.rewardbox{background:#ffffffd9;border:1px solid #e9eaf1;border-radius:22px;box-shadow:var(--shadow)}
+.sidebar{padding:15px;position:static}.side-title{font-weight:850;margin:3px 8px 10px}.lesson-link{display:flex;gap:10px;align-items:center;width:100%;text-align:left;padding:10px;border-radius:13px;background:transparent;color:#47536d;margin:3px 0}.lesson-link:hover,.lesson-link.active{background:linear-gradient(100deg,#ffe7f4,#e5f5ff);color:#172747}.num{width:29px;height:29px;display:grid;place-items:center;border-radius:10px;background:#edf0f7;font-size:.8rem;font-weight:850;flex-shrink:0}.lesson-link.active .num{background:#fff;color:#8b4e87}
+.main{min-width:0}.lesson{padding:25px;margin-bottom:15px}.kicker{font-size:.76rem;text-transform:uppercase;letter-spacing:.13em;font-weight:850;color:#9b5a91}.lesson h2{font-size:1.7rem;line-height:1.15;margin:7px 0 12px;color:var(--navy)}.lesson h3{margin:22px 0 8px;color:#34405c}.lesson p{margin:8px 0}.simple{background:linear-gradient(100deg,#fff0f8,#eff9ff);padding:14px 16px;border-radius:15px;border-left:4px solid var(--pink);margin:15px 0}.simple strong{color:#743c75}.example{background:#f4f6fb;border-radius:14px;padding:13px 15px;margin:12px 0}.formula{font-family:ui-monospace,monospace;font-weight:800;background:#172747;color:white;padding:12px 15px;border-radius:13px;display:inline-block;margin:7px 0}.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.chip{font-size:.77rem;font-weight:750;padding:5px 10px;border-radius:99px;background:#e8f5ff;color:#315e80}
+.actionrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.primary,.secondary{padding:11px 16px;border-radius:13px;font-weight:800}.primary{background:var(--navy);color:white}.secondary{background:#fbe5f2;color:#793d71}.primary:hover{filter:brightness(1.12)}.secondary:hover{background:#f6d4e9}
+.quizbox{padding:22px}.quiz-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.quiz-head h2{margin:0;color:var(--navy)}.question{font-size:1.12rem;font-weight:800;margin:18px 0 13px}.answers{display:grid;gap:9px}.answer{padding:12px 14px;border:1px solid #e1e6ef;border-radius:13px;background:#fff;text-align:left;color:#34405c}.answer:hover{border-color:#b58ac0;background:#fff8fc}.answer.correct{border-color:#70c69c;background:#edfff5}.answer.wrong{border-color:#e59aaf;background:#fff1f4}.feedback{padding:13px;border-radius:13px;margin-top:13px;display:none}.feedback.show{display:block}.feedback.good{background:#eafff2;color:#206344}.feedback.bad{background:#fff0f3;color:#8c3651}.quiz-footer{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:17px;flex-wrap:wrap}.small{font-size:.83rem;color:var(--muted)}
+.rewardbox{padding:22px;margin-top:15px;background:linear-gradient(120deg,#fff0f8,#eef9ff)}.rewardbox h3{margin:0 0 7px}.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin-top:15px}
+.badge{padding:13px;border-radius:16px;background:#fff;border:1px solid #e6d9ee;font-weight:750;font-size:.87rem;display:flex;align-items:center;gap:9px;min-height:62px}
+.badge.locked{opacity:.52;filter:grayscale(.8)}
+.badge-icon{font-size:1.45rem}
+.rank-card{display:flex;align-items:center;gap:16px;padding:17px;border-radius:18px;background:linear-gradient(120deg,#172747,#344d79);color:white;margin:16px 0}
+.rank-emblem{width:64px;height:64px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,#f5b6dc,#a9e1fa);font-size:2rem;flex-shrink:0}
+.rank-card h3{color:white;margin:0 0 3px}.rank-card p{margin:0;color:#e4edff;font-size:.88rem}
+.xp-track{height:11px;background:#e7eaf2;border-radius:99px;overflow:hidden;margin:8px 0 5px}.xp-track span{display:block;height:100%;width:0;background:linear-gradient(90deg,#f0a6d0,#83d3f5);border-radius:99px}
+.reward-quote{border-radius:16px;padding:17px;background:#fff;border:1px solid #ead9ee;margin-top:16px;font-weight:700;color:#59426c}
+.reward-sub{font-size:.82rem;color:#66718a}.hidden{display:none!important}
+footer{text-align:center;padding:24px 10px;color:#778198;font-size:.8rem}
+.modal{position:fixed;inset:0;background:#101a3477;display:none;place-items:center;padding:20px;z-index:5}.modal.show{display:grid}.modal-card{max-width:430px;background:white;border-radius:24px;padding:27px;text-align:center;box-shadow:0 20px 70px #101a3455}.star{font-size:3rem}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="hero">
+ <div class="hero-inner">
+  <span class="hero-tag">UNH · L3 IAe · Automates programmables</span>
+  <div class="eyebrow" style="margin-top:17px">Ton espace de révision</div>
+  <h1>API Academy<br>avec Gojo</h1>
+  <p>On reprend les bases tranquillement. Des explications simples, des exemples, des quiz et des petites récompenses pour avancer à ton rythme.</p>
+  <span class="hero-tag">Rose · Bleu · Un peu de magie ✦</span>
+ </div>
+ <div class="hero-art" aria-label="Silhouette décorative inspirée d'un mentor d'anime"></div>
+</header>
+<div class="topline">
+ <div class="progress-wrap"><div class="progress-label"><span>Ta progression</span><span id="progressText">0 %</span></div><div class="progress"><span id="progressBar"></span></div></div>
+ <div class="points">✦ <span id="points">0</span> points</div>
+</div>
+<nav class="tabs" aria-label="Navigation">
+ <button class="tab active" data-view="learn">Apprendre</button><button class="tab" data-view="quiz">Quiz</button><button class="tab" data-view="rewards">Récompenses</button><button class="tab" data-view="memo">Fiche mémo</button>
+</nav>
+<div class="layout">
+ <aside class="panel sidebar" id="sidebar"><div class="side-title">Leçons</div><div id="lessonNav"></div></aside>
+ <main class="main">
+  <section id="learnView">
+   <article class="lesson" id="lessonContent"></article>
+  </section>
+  <section id="quizView" class="hidden">
+   <div class="quizbox">
+    <div class="quiz-head"><h2>Petit défi de Gojo</h2><span class="chip" id="quizCount">Question 1</span></div>
+    <p class="small">Choisis une réponse. Si tu te trompes, lis l'explication : c'est comme ça qu'on apprend.</p>
+    <div class="question" id="question"></div><div class="answers" id="answers"></div>
+    <div class="feedback" id="feedback"></div>
+    <div class="quiz-footer"><span class="small" id="quizScore">Bonnes réponses : 0</span><button class="primary" id="nextBtn" disabled>Question suivante →</button></div>
+   </div>
+  </section>
+  <section id="rewardsView" class="hidden">
+   <div class="rewardbox"><div class="kicker">Ton parcours de sorcière</div><h2>Le système de récompenses</h2><p>Chaque leçon terminée et chaque bonne réponse te donnent de l'XP. En montant de niveau, tu débloques des rangs, des cartes de mentor et des messages spéciaux.</p>
+<div class="rank-card"><div class="rank-emblem" id="rankIcon">🌱</div><div><h3 id="rankName">Débutante</h3><p id="rankDesc">Ton entraînement commence ici.</p><p style="margin-top:6px"><b><span id="rankXp">0</span> XP</b> · <span id="nextRank">50 XP pour le prochain rang</span></p></div></div>
+<div class="reward-sub">Progression vers le prochain rang</div><div class="xp-track"><span id="rankBar"></span></div>
+<h3 style="margin:20px 0 5px">Tes cartes à débloquer</h3><div class="badges" id="badges"></div>
+<div class="reward-quote" id="rewardMessage">« Tu viens de commencer. Même les plus forts ont dû apprendre les bases. »</div>
+<p class="reward-sub">La lecture vocale utilise une voix disponible sur ton téléphone, pas la voix officielle de Gojo.</p></div>
+  </section>
+  <section id="memoView" class="hidden">
+   <article class="lesson"><div class="kicker">À garder en tête</div><h2>Fiche mémo express</h2><div id="memoContent"></div><div class="actionrow"><button class="secondary" onclick="speakMemo()">🔊 Écouter la fiche</button></div></article>
+  </section>
+ </main>
+</div>
+<footer>Contenu construit à partir de ton document « API_preview.pdf » (36 questions). Les explications sont reformulées pour débuter. Fonctionne hors connexion.</footer>
+</div>
+<div class="modal" id="modal"><div class="modal-card"><div class="star">✦</div><h2 id="modalTitle">Bravo !</h2><p id="modalText"></p><button class="primary" onclick="closeModal()">Continuer</button></div></div>
+<script>
+const lessons = [
+{title:"C'est quoi un API ?",tag:"Les bases",body:`<p>API signifie <b>automate programmable industriel</b>. En anglais, on dit PLC. C'est un ordinateur conçu pour piloter une machine ou une installation industrielle.</p><div class="simple"><strong>Imagine :</strong> un API est le cerveau d'une machine. Il reçoit des informations, réfléchit en suivant son programme, puis donne des ordres.</div><h3>Les 3 éléments à retenir</h3><ol><li><b>Entrées :</b> les informations reçues des capteurs et interrupteurs.</li><li><b>Programme :</b> les règles que l'automate doit suivre.</li><li><b>Sorties :</b> les actions commandées : moteur, vanne, relais…</li></ol><h3>Son cycle de fonctionnement</h3><p>L'API recommence continuellement ces étapes :</p><ol><li>Lire toutes les entrées et les mémoriser.</li><li>Exécuter le programme.</li><li>Mettre à jour les sorties.</li><li>Recommencer : c'est le cycle (ou temps de cycle).</li></ol><div class="example">Exemple : un capteur détecte une boîte → l'API lit cette information → le programme décide de démarrer le convoyeur → la sortie active le moteur.</div>`,keys:["API = cerveau industriel","Entrées → programme → sorties","Cycle répété en permanence"]},
+{title:"Arduino Uno",tag:"Carte & programmation",body:`<p>Arduino Uno est une petite carte électronique programmable. Elle contient un microcontrôleur : une puce qui exécute le programme.</p><div class="simple"><strong>À retenir du document :</strong> microcontrôleur 8 bits, fréquence 16 MHz, SRAM de 2 Ko et alimentation 5 V.</div><h3>Les broches</h3><ul><li><b>0 à 13 :</b> broches numériques (entrée ou sortie). Les broches 3, 5, 6, 9, 10 et 11 peuvent aussi faire du PWM.</li><li><b>A0 à A5 :</b> entrées analogiques.</li><li><b>GND :</b> masse ; <b>5V</b> et <b>3.3V :</b> alimentations.</li></ul><h3>Structure du programme</h3><div class="formula">setup() → une fois</div><p>Configure les broches et les éléments au démarrage.</p><div class="formula">loop() → en boucle</div><p>Contient les instructions répétées sans arrêt.</p><div class="example"><b>Petit moyen mnémotechnique :</b> setup = préparer la scène ; loop = jouer la scène encore et encore.</div>`,keys:["Uno : 16 MHz, 2 Ko SRAM, 5 V","Broches numériques 0–13","Analogiques A0–A5","setup() une fois ; loop() en boucle"]},
+{title:"Tension, analogique & lumière",tag:"Électricité",body:`<p>La tension électrique se mesure en volts (V). La loi d'Ohm relie tension, résistance et courant.</p><div class="formula">U = R × I</div><p>U = tension, R = résistance, I = intensité du courant.</p><h3>Lire une valeur analogique</h3><p>Sur Arduino Uno, le convertisseur analogique-numérique travaille sur 10 bits : il transforme une tension de 0 à 5 V en une valeur de 0 à 1023.</p><div class="formula">valeur ≈ tension × 1023 / 5</div><h3>Exemple de la photorésistance</h3><p>Une photorésistance (LDR) change de résistance selon la lumière. Dans le montage du document, plus il y a de lumière, plus la résistance LDR diminue et plus la lecture A0 augmente.</p><div class="example"><b>Pénombre :</b> LDR = 40 kΩ → tension = 1,00 V → lecture ≈ 205.<br><b>Pleine lumière :</b> LDR = 2 kΩ → tension ≈ 4,17 V → lecture ≈ 852.</div>`,keys:["Loi d'Ohm : U = R × I","Arduino analogique : 0–1023 pour 0–5 V","Plus de lumière → lecture plus grande dans ce montage"]},
+{title:"PWM, moteur & transistor",tag:"Commander un moteur",body:`<p>Le PWM est une façon de commander une puissance en faisant varier la proportion de temps pendant laquelle un signal est à l'état haut.</p><div class="formula">PWM Arduino : 0 à 255</div><p>0 correspond à 0 % et 255 à 100 % dans le rappel du cours.</p><h3>Pourquoi ne pas brancher directement un moteur ?</h3><p>Une broche Arduino fournit environ 20 mA au maximum. Le moteur de l'exercice demande 300 mA : c'est beaucoup trop. On utilise un transistor comme interrupteur commandé.</p><div class="simple"><strong>Analogie :</strong> Arduino donne un petit signal de commande ; le transistor permet de contrôler le courant plus important du moteur.</div><p>Dans l'exercice : β = 100, I<sub>C</sub> = 300 mA. Avec la marge demandée, I<sub>B</sub> = 2 × I<sub>C</sub>/β = 6 mA. Puis R<sub>B</sub> = (5 − 0,7)/0,006 ≈ 717 Ω ; le document choisit 680 Ω. Une diode de roue libre est ajoutée en parallèle du moteur.</p>`,keys:["PWM : 0–255","Ne pas alimenter directement un moteur puissant depuis une broche","Transistor = commande du courant moteur"]},
+{title:"Capteurs : courant, servo, ultrasons",tag:"Mesurer & agir",body:`<h3>Capteur 4–20 mA</h3><p>Il représente une mesure par un courant entre 4 et 20 mA. Dans l'exemple, cette plage correspond à un niveau de 0 à 5 m.</p><div class="example">12 mA → (12−4)/16 × 5 = <b>2,5 m</b>.<br>7,2 mA → (7,2−4)/16 × 5 = <b>1 m</b>.</div><p>Pourquoi commencer à 4 mA ? Parce que 0 mA peut signaler un défaut, par exemple un fil coupé.</p><h3>Servomoteur</h3><p>Un servo peut positionner un élément. Le rappel du document : période de 20 ms ; impulsion de 1 ms pour 0°, 1,5 ms pour 90°, 2 ms pour 180°.</p><div class="example">Pour 32 °C sur une échelle de 0 à 50 °C : map(32,0,50,0,180) = 115,2°. L'impulsion correspondante est environ 1,64 ms.</div><h3>Capteur ultrason HC-SR04</h3><p>Il mesure le temps entre l'émission d'une onde et le retour de son écho. On divise par 2 car l'onde fait l'aller et le retour.</p><div class="formula">distance (cm) = durée (µs) × 0,0343 / 2</div><div class="example">Écho de 1 160 µs → environ 19,9 cm, donc environ 20 cm.</div>`,keys:["4–20 mA : mesure + détection de défaut","Servo : 1 ms = 0°, 1,5 ms = 90°, 2 ms = 180°","HC-SR04 : durée × 0,0343 / 2"]},
+{title:"GRAFCET & logique",tag:"Organiser les étapes",body:`<p>Le GRAFCET décrit graphiquement les étapes d'un automatisme et les conditions qui permettent de passer d'une étape à une autre.</p><div class="simple"><strong>Étape :</strong> ce que le système fait à un moment donné.<br><strong>Transition :</strong> la condition qui autorise le passage à l'étape suivante.<br><strong>Réceptivité :</strong> la condition écrite près de la transition.</div><p>Une transition est franchie lorsque l'étape (ou les étapes) qui la précèdent est/sont active(s) ET que sa réceptivité est vraie.</p><h3>Deux types de chemins</h3><ul><li><b>Divergence OU :</b> on choisit une seule branche selon la condition.</li><li><b>Divergence ET :</b> plusieurs branches démarrent en même temps ; il faut attendre leur synchronisation.</li></ul><p>Dans le mélangeur du document, les réservoirs A et B se remplissent en parallèle. Une fois les deux remplissages terminés, la transition de synchronisation autorise le mélange.</p><h3>Actions</h3><ul><li><b>Action retardée :</b> démarre après un délai tant que l'étape reste active.</li><li><b>Action conditionnelle :</b> s'exécute si l'étape est active et si sa condition est vraie.</li></ul>`,keys:["Étape = situation/action","Transition = passage sous condition","OU = une branche ; ET = branches parallèles puis synchronisation"]},
+{title:"MQTT, broker & IoT",tag:"Communication",body:`<p>MQTT est un protocole de messagerie souvent utilisé pour faire remonter des données de capteurs vers un système de supervision.</p><div class="simple"><strong>Broker :</strong> serveur central qui reçoit les messages des éditeurs et les distribue aux abonnés.</div><p>Dans le modèle publish/subscribe, l'éditeur et l'abonné ne communiquent pas directement : le broker les relie. Ils n'ont pas besoin de se connaître.</p><h3>Quelques éléments importants</h3><ul><li><b>QoS 0 :</b> livraison au mieux, sans confirmation.</li><li><b>QoS 1 :</b> livraison au moins une fois (un doublon est possible).</li><li><b>QoS 2 :</b> livraison exactement une fois, avec davantage d'échanges.</li><li><b>PINGREQ / PINGRESP :</b> servent à maintenir la connexion active (keep-alive).</li></ul><p>MQTT a été créé en 1999 par IBM pour la supervision de pipelines, selon le document. La norme associée indiquée est ISO/IEC 20922.</p>`,keys:["MQTT : publish / subscribe via broker","QoS 2 : exactement une fois","PINGREQ/PINGRESP : keep-alive","ISO/IEC 20922 : MQTT"]},
+{title:"ESP32, supervision & sécurité",tag:"Système connecté",body:`<p>Un ESP32 peut servir de passerelle entre les capteurs et la supervision : il lit les mesures, les met en forme, puis les publie en MQTT vers un broker. Un tableau de bord ou une base de données récupère ensuite les informations.</p><p>MQTT complète les bus de terrain de l'API ; il ne remplace pas les échanges temps réel déterministes comme Modbus, Profibus ou Ethernet industriel.</p><h3>Sécuriser un système IoT industriel</h3><ul><li><b>TLS :</b> protège les échanges pour éviter que les messages soient lus ou modifiés facilement.</li><li><b>Authentification :</b> vérifie qui se connecte.</li><li><b>ACL :</b> limite les actions autorisées, par exemple les topics sur lesquels un client peut publier.</li></ul><div class="simple">En industrie, une fausse mesure ou une commande non autorisée peut avoir des conséquences importantes. La sécurité n'est donc pas facultative.</div><h3>Superviser une machine ancienne</h3><p>On peut ajouter des capteurs ou lire les signaux existants avec un ESP32 ou un petit API passerelle, puis transmettre les données vers un tableau de bord. La logique et les sécurités de la machine restent en place ; on commence par une supervision en lecture seule.</p>`,keys:["ESP32 = passerelle capteurs → MQTT → supervision","MQTT complète les bus de terrain","TLS + authentification + ACL"]},
+{title:"Modbus, OpenPLC & temporisation",tag:"Programmation pratique",body:`<p>Dans le TP OpenPLC, les entrées %IX sont des entrées discrètes que le maître peut lire mais pas écrire. Pour des capteurs simulés que la passerelle doit pouvoir écrire, le document réserve donc des coils inscriptibles (%QX0.x). Les ordres de l'automate sont placés sur d'autres coils (%QX1.x).</p><p>Rappel d'adresse Modbus : <b>coil = 8 × octet + bit</b>. Exemple donné : %QX1.2 → coil 10.</p><h3>millis() plutôt que delay()</h3><p><b>delay()</b> bloque le programme pendant l'attente : Arduino ne peut pas traiter les autres tâches pendant ce temps. <b>millis()</b> permet de vérifier le temps écoulé sans bloquer la boucle : le programme reste réactif aux capteurs, boutons et alarmes.</p><h3>Wokwi</h3><p>Dans Wokwi, <b>diagram.json</b> décrit le circuit (composants et câblage). L'ESP32 simulé se connecte au Wi-Fi <b>Wokwi-GUEST</b> sans mot de passe.</p>`,keys:["%IX : entrées discrètes ; %QX : coils dans l'exercice","millis() ne bloque pas la boucle","diagram.json = description du circuit"]},
+{title:"Révisions : petits programmes",tag:"Application",body:`<p>Un programme Arduino suit souvent la structure setup()/loop(). On configure d'abord les broches, puis on répète les mesures et les actions.</p><h3>Exemple du HC-SR04</h3><p>Le document demande de mesurer la distance (TRIG sur 9, ECHO sur 10), puis d'allumer une LED selon la distance :</p><ul><li>Vert : distance supérieure à 100 cm.</li><li>Orange : distance entre 30 et 100 cm inclus.</li><li>Rouge : distance inférieure à 30 cm.</li></ul><div class="example"><code>distance = durée × 0,0343 / 2</code><br>Ensuite, on compare la distance aux seuils pour choisir la LED.</div><h3>Autres rappels du QCM</h3><ul><li>La capacité d'un condensateur s'exprime en farads ; Q = C × V.</li><li>Arduino Uno : int sur 16 bits, de −32 768 à +32 767.</li><li>digitalRead renvoie HIGH ou LOW.</li><li>Arduino Mega apporte davantage d'entrées/sorties que l'Uno.</li><li>La norme des langages API est CEI (IEC) 61131-3.</li></ul>`,keys:["digitalRead → HIGH ou LOW","Capacité → farad ; Q = C × V","IEC 61131-3 : langages API","Uno int : −32 768 à +32 767"]}
+];
+const questions=[
+["Un API sert principalement à…",["Jouer de la musique","Automatiser un processus industriel","Naviguer sur Internet","Charger un téléphone"],1,"Un API surveille des entrées, exécute un programme et commande des sorties."],
+["Quel est l'ordre du cycle d'un API ?",["Sorties → programme → entrées","Programme → sorties → entrées","Lecture des entrées → programme → sorties","Entrées → sorties → programme"],2,"Le cycle commence par la lecture des entrées, puis exécute le programme et met à jour les sorties."],
+["Quelle fonction Arduino s'exécute une seule fois au démarrage ?",["loop()","setup()","analogRead()","digitalRead()"],1,"setup() sert à configurer la carte au démarrage."],
+["Quelle fonction se répète continuellement ?",["setup()","loop()","pinMode()","map()"],1,"loop() contient les instructions répétées."],
+["La mémoire SRAM de l'Arduino Uno indiquée dans le document est de…",["2 Ko","2 Go","16 Ko","512 Mo"],0,"Le rappel du document donne 2 Ko de SRAM."],
+["Les entrées analogiques de l'Uno sont…",["0 à 13","A0 à A5","D20 à D30","RX et TX seulement"],1,"Les broches A0 à A5 sont les entrées analogiques."],
+["La lecture analogique sur Uno va de…",["0 à 255","0 à 100","0 à 1023","−255 à 255"],2,"Le convertisseur est sur 10 bits : 0 à 1023 pour 0 à 5 V."],
+["Dans le montage LDR du document, plus la lumière augmente…",["La lecture A0 diminue","La lecture A0 augmente","A0 devient toujours zéro","La carte s'éteint"],1,"La résistance de la LDR baisse et la valeur lue augmente dans ce montage."],
+["Pourquoi ne branche-t-on pas directement le moteur de 300 mA sur la broche ?",["La broche ne fournit qu'environ 20 mA au maximum","Le moteur fonctionne uniquement en Wi-Fi","Arduino n'a pas de broches","Le moteur est trop léger"],0,"300 mA dépasse largement les quelque 20 mA d'une broche. On utilise un étage de commande adapté."],
+["Le PWM du rappel Arduino va de…",["0 à 10","0 à 1023","0 à 255","1 à 20"],2,"Le rappel donne 0 (0 %) à 255 (100 %)."],
+["Pourquoi la mesure 4–20 mA ne commence-t-elle pas à 0 mA ?",["Pour économiser du cuivre","0 mA peut signaler un défaut","Pour augmenter la température","Parce que 4 mA est la masse"],1,"Le 0 mA peut indiquer un fil coupé ou un capteur hors service."],
+["Une impulsion servo de 1,5 ms correspond à…",["0°","45°","90°","180°"],2,"Le rappel donne 1,5 ms pour 90°."],
+["Pourquoi diviser par 2 dans la formule du HC-SR04 ?",["Pour corriger la température","Parce que l'onde fait l'aller et le retour","Parce que le capteur a deux broches","Pour obtenir des mètres"],1,"La durée mesurée correspond au trajet aller-retour."],
+["Une transition GRAFCET est franchie lorsque…",["Sa réceptivité est vraie, même sans étape active","Les étapes précédentes sont actives et la réceptivité est vraie","Toutes les étapes sont actives","Le programme est arrêté"],1,"Il faut une étape précédente active ET une réceptivité vraie."],
+["Une divergence ET signifie que…",["Une seule branche est choisie","Toutes les branches concernées démarrent en parallèle","Le système s'arrête","Les transitions sont supprimées"],1,"Les branches démarrent ensemble et une synchronisation peut les réunir."],
+["Une action conditionnelle s'exécute…",["Toujours","Après l'arrêt","Si l'étape est active et la condition vraie","Avant l'étape"],2,"C'est exactement la définition donnée dans le document."],
+["Dans publish/subscribe, éditeur et abonné…",["Doivent se connaître","Sont reliés par le broker et découplés","Doivent partager un clavier","Communiquent uniquement par câble USB"],1,"Le broker reçoit puis distribue les messages."],
+["Quelle QoS vise une livraison exactement une fois ?",["QoS 0","QoS 1","QoS 2","Aucune"],2,"QoS 2 garantit exactement une fois, au prix de davantage d'échanges."],
+["PINGREQ et PINGRESP servent à…",["Maintenir la connexion active","Créer un capteur","Changer le mot de passe","Éteindre le broker"],0,"Ce sont des messages keep-alive."],
+["Dans Wokwi, diagram.json contient…",["Le code secret Wi-Fi","La description du circuit et du câblage","Les notes de cours","La base de données"],1,"Il décrit les composants et leurs connexions."],
+["TLS, authentification et ACL servent à…",["Décorer le tableau de bord","Sécuriser les communications et les accès","Augmenter la tension","Accélérer le moteur"],1,"TLS protège les échanges, l'authentification vérifie l'identité et les ACL limitent les droits."],
+["millis() est utile car…",["Il bloque toujours le programme","Il permet de gérer le temps sans bloquer la boucle","Il remplace toutes les broches","Il efface la mémoire"],1,"Contrairement à delay(), millis() laisse le programme réagir aux autres événements."],
+["digitalRead() renvoie…",["Une tension en volts","HIGH ou LOW","Une valeur de 0 à 1023","Une valeur de 0 à 255"],1,"digitalRead lit un état numérique : HIGH ou LOW."],
+["La capacité d'un condensateur s'exprime en…",["Ohms","Henrys","Farads","Watts"],2,"L'unité de capacité est le farad."],
+["La norme des langages de programmation des API est…",["ISO 9001","IEEE 802.11","CEI/IEC 61131-3","ISO/IEC 20922"],2,"IEC 61131-3 définit les langages des automates ; ISO/IEC 20922 concerne MQTT."],
+["Le rôle de l'ESP32 passerelle est de…",["Remplacer tous les capteurs","Lire les capteurs et transmettre les mesures vers la supervision","Supprimer le broker","Commander seul toute l'usine"],1,"Il lit les mesures et les publie en MQTT vers un broker."],
+["Dans l'exercice Modbus, pourquoi utiliser des coils pour les capteurs simulés ?",["Les entrées %IX peuvent être écrites par le maître","Les coils sont inscriptibles dans ce scénario","Les coils mesurent la température","Parce que %IX n'existe pas"],1,"Le document explique que les %IX sont des entrées discrètes lisibles mais non inscriptibles par le maître."],
+["Dans le rappel, une variable int sur Arduino Uno est sur…",["8 bits","16 bits","32 bits","64 bits"],1,"Le document donne −32 768 à +32 767, ce qui correspond à 16 bits."],
+["Quelle amélioration l'Arduino Mega apporte-t-elle par rapport à l'Uno ?",["Wi-Fi intégré","Plus d'entrées/sorties","Aucune programmation","Une batterie obligatoire"],1,"Le QCM du document indique davantage d'entrées/sorties."],
+["Dans le tri de colis, le capteur g sert à…",["Indiquer si le colis est grand","Mesurer la température","Démarrer le Wi-Fi","Compter les petits colis"],0,"Le capteur g indique un grand colis ; le GRAFCET choisit alors la branche A ou B."],
+["Dans le mélangeur, pourquoi les étapes d'attente 2 et 4 sont-elles utiles ?",["Pour arrêter définitivement l'API","Pour synchroniser les deux remplissages","Pour compter les colis","Pour mesurer la distance"],1,"La transition de synchronisation est franchie quand les deux étapes d'attente sont actives."]
+];
+let currentLesson=0, points=0, completed=new Set(), qIndex=0, score=0, answered=false;
+try{const saved=JSON.parse(localStorage.getItem("apiAcademyProgress")||"{}");points=Number(saved.points)||0;completed=new Set(Array.isArray(saved.completed)?saved.completed:[]);}catch(e){}
+function saveProgress(){try{localStorage.setItem("apiAcademyProgress",JSON.stringify({points,completed:[...completed]}));}catch(e){}}
+const $=id=>document.getElementById(id);
+function renderNav(){ $("lessonNav").innerHTML=lessons.map((l,i)=>`<button class="lesson-link ${i===currentLesson?'active':''}" onclick="showLesson(${i})"><span class="num">${i+1}</span><span>${l.title}</span></button>`).join("");}
+function showLesson(i){currentLesson=i;renderNav();const l=lessons[i];$("lessonContent").innerHTML=`<div class="kicker">Leçon ${i+1} · ${l.tag}</div><h2>${l.title}</h2>${l.body}<div class="chips">${l.keys.map(k=>`<span class="chip">${k}</span>`).join("")}</div><div class="actionrow"><button class="secondary" onclick="speakLesson()">🔊 Écouter cette leçon</button><button class="primary" onclick="completeLesson()">J'ai compris ✓</button>${i<lessons.length-1?`<button class="secondary" onclick="showLesson(${i+1})">Leçon suivante →</button>`:""}</div>`;updateProgress();}
+function completeLesson(){if(!completed.has(currentLesson)){completed.add(currentLesson);points+=10;showModal("Leçon validée !","Tu viens de gagner 10 points. Continue à ton rythme.");}updateProgress();}
+function updateProgress(){let pct=Math.round(completed.size/lessons.length*100);$("progressText").textContent=pct+" %";$("progressBar").style.width=pct+"%";$("points").textContent=points;saveProgress();renderBadges();}
+function renderBadges(){
+ const xp=points;
+ const ranks=[
+  {min:0,name:"Débutante",icon:"🌱",desc:"Tu poses les premières bases.",next:50},
+  {min:50,name:"Élève de l'infini",icon:"💠",desc:"Tu commences à maîtriser les notions.",next:120},
+  {min:120,name:"Technicienne confirmée",icon:"⚡",desc:"Tu sais relier les notions entre elles.",next:220},
+  {min:220,name:"Spécialiste des API",icon:"🪄",desc:"Ton raisonnement devient solide.",next:350},
+  {min:350,name:"Rang spécial",icon:"👑",desc:"Tu as terminé un vrai parcours de révision.",next:350}
+ ];
+ const r=ranks.filter(x=>xp>=x.min).at(-1);
+ $("rankIcon").textContent=r.icon;$("rankName").textContent=r.name;$("rankDesc").textContent=r.desc;$("rankXp").textContent=xp;
+ $("nextRank").textContent=xp>=350?"Rang maximum atteint":`${r.next-xp} XP pour le prochain rang`;
+ $("rankBar").style.width=(xp>=350?100:Math.max(0,(xp-r.min)/(r.next-r.min)*100))+"%";
+ const b=[
+  ["🌸","Premier pas","Terminer une première leçon",completed.size>=1],
+  ["💙","Esprit curieux","Terminer 3 leçons",completed.size>=3],
+  ["🧠","Mémoire en éveil","Terminer 6 leçons",completed.size>=6],
+  ["🏅","Parcours accompli","Terminer les 10 leçons",completed.size>=lessons.length],
+  ["🎯","Précision","Obtenir 5 bonnes réponses",score>=5],
+  ["⚡","Réflexes éclair","Obtenir 10 bonnes réponses",score>=10],
+  ["👑","Rang spécial","Atteindre 350 XP",xp>=350]
+ ];
+ $("badges").innerHTML=b.map(x=>`<div class="badge ${x[3]?"":"locked"}"><span class="badge-icon">${x[0]}</span><span>${x[1]}<br><small>${x[2]} · ${x[3]?"Débloqué":"Verrouillé"}</small></span></div>`).join("");
+ const messages=[[0,"« Tu viens de commencer. Même les plus forts ont dû apprendre les bases. »"],[50,"« Pas mal. Maintenant, montre-moi que tu as compris, pas seulement mémorisé. »"],[120,"« Tu progresses. La vraie force, c'est de comprendre pourquoi ça fonctionne. »"],[220,"« Impressionnant. Tu commences à voir le système dans son ensemble. »"],[350,"« Rang spécial obtenu. Cette fois, je reconnais ton travail. »"]];
+ $("rewardMessage").textContent=messages.filter(m=>xp>=m[0]).at(-1)[1];
+}
+function setView(v){["learn","quiz","rewards","memo"].forEach(x=>$(x+"View").classList.toggle("hidden",x!==v));$("sidebar").classList.toggle("hidden",v!=="learn");document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t.dataset.view===v));}
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>setView(t.dataset.view)));
+function loadQuestion(){answered=false;let q=questions[qIndex];$("quizCount").textContent=`Question ${qIndex+1} / ${questions.length}`;$("question").textContent=q[0];$("answers").innerHTML=q[1].map((a,i)=>`<button class="answer" onclick="chooseAnswer(${i})">${String.fromCharCode(65+i)}. ${a}</button>`).join("");$("feedback").className="feedback";$("feedback").textContent="";$("nextBtn").disabled=true;$("nextBtn").textContent=qIndex===questions.length-1?"Recommencer le quiz ↻":"Question suivante →";$("quizScore").textContent=`Bonnes réponses : ${score}`;}
+function chooseAnswer(i){if(answered)return;answered=true;const q=questions[qIndex];document.querySelectorAll(".answer").forEach((b,j)=>{if(j===q[2])b.classList.add("correct");else if(j===i)b.classList.add("wrong");b.disabled=true;});let good=i===q[2];if(good){score++;points+=5;}const f=$("feedback");f.className="feedback show "+(good?"good":"bad");f.innerHTML=(good?"<b>Exact ! +5 points.</b> ":"<b>Pas tout à fait.</b> ")+q[3];$("nextBtn").disabled=false;$("quizScore").textContent=`Bonnes réponses : ${score}`;updateProgress();}
+$("nextBtn").addEventListener("click",()=>{if(qIndex===questions.length-1){qIndex=0;score=0;loadQuestion();showModal("Nouveau départ !","Tu peux refaire le quiz pour consolider tes connaissances.");}else{qIndex++;loadQuestion();}});
+function speak(text){if(!("speechSynthesis" in window)){alert("La lecture vocale n'est pas disponible sur ce navigateur.");return;}speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(text);u.lang="fr-FR";u.rate=.92;speechSynthesis.speak(u);}
+function speakLesson(){let txt=$("lessonContent").innerText.replace(/🔊|J'ai compris|Leçon suivante/g,"");speak(txt);}
+function speakMemo(){speak(lessons.map(l=>l.title+". "+l.keys.join(". ")).join(". "));}
+function showModal(title,txt){$("modalTitle").textContent=title;$("modalText").textContent=txt;$("modal").classList.add("show");}
+function closeModal(){$("modal").classList.remove("show");}
+$("memoContent").innerHTML=lessons.map((l,i)=>`<h3>${i+1}. ${l.title}</h3><ul>${l.keys.map(k=>`<li>${k}</li>`).join("")}</ul>`).join("");
+renderNav();showLesson(0);loadQuestion();renderBadges();
+</script>
+</body></html>
